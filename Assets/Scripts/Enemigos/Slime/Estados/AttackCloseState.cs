@@ -10,6 +10,9 @@ public class AttackCloseState : IEnemyState
     private bool isAttacking = false;
     private bool isLongRangeAttack = false;
 
+    private GameObject attackHitbox;
+    private BoxCollider attackCollider;
+
     public AttackCloseState(Slime slime)
     {
         this.slime = slime;
@@ -25,6 +28,8 @@ public class AttackCloseState : IEnemyState
         slime.animator.SetBool("IdleBattle", true);
         slime.animator.SetBool("RunFWD", false);
         slime.animator.SetBool("WalkFWD", false);
+
+        CreateAttackHitbox();
     }
 
     public void UpdateState()
@@ -48,10 +53,8 @@ public class AttackCloseState : IEnemyState
 
         if (!isPreparingAttack && !isAttacking)
         {
-            // Sigue al jugador con la mirada durante IdleBattle
             FollowPlayerWithLook();
 
-            // Cuenta atrás para iniciar el ataque
             attackTimer -= Time.deltaTime;
             if (attackTimer <= 0)
             {
@@ -60,10 +63,16 @@ public class AttackCloseState : IEnemyState
         }
         else if (isAttacking)
         {
-            if (slime.animator.GetCurrentAnimatorStateInfo(0).IsName(isLongRangeAttack ? "Attack02" : "Attack01") &&
-                slime.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+            string attackAnimation = isLongRangeAttack ? "Attack02" : "Attack01";
+            var animatorStateInfo = slime.animator.GetCurrentAnimatorStateInfo(0);
+
+            if (animatorStateInfo.IsName(attackAnimation) && animatorStateInfo.normalizedTime >= 1.0f)
             {
                 ResetAttack();
+            }
+            else if (animatorStateInfo.IsName(attackAnimation) && animatorStateInfo.normalizedTime >= 0.5f)
+            {
+                ActivateAttackHitbox();
             }
         }
     }
@@ -102,5 +111,43 @@ public class AttackCloseState : IEnemyState
         attackTimer = slime.attackCooldown;
         slime.animator.SetBool("IdleBattle", true);
         EnterState();
+    }
+
+    private void CreateAttackHitbox()
+    {
+        if (attackHitbox == null)
+        {
+            attackHitbox = new GameObject("AttackHitbox");
+            attackHitbox.transform.SetParent(slime.transform);
+            attackHitbox.transform.localPosition = new Vector3(0, 0, 1);
+
+            attackCollider = attackHitbox.AddComponent<BoxCollider>();
+            attackCollider.isTrigger = true;
+
+            attackCollider.size = new Vector3(1, 1, 6);
+
+            attackCollider.center = new Vector3(0, 0, attackCollider.size.z / 2);
+
+            AttackHitbox hitboxScript = attackHitbox.AddComponent<AttackHitbox>();
+            hitboxScript.Initialize(slime);
+
+            attackHitbox.SetActive(false);
+        }
+    }
+
+    private void ActivateAttackHitbox()
+    {
+        Vector3 directionToPlayer = (slime.player.position - slime.transform.position).normalized;
+        attackHitbox.transform.rotation = Quaternion.LookRotation(directionToPlayer);
+
+        attackHitbox.SetActive(true);
+
+        slime.StartCoroutine(DeactivateHitboxAfterAttack());
+    }
+
+    private IEnumerator DeactivateHitboxAfterAttack()
+    {
+        yield return new WaitForSeconds(0.1f);
+        attackHitbox.SetActive(false);
     }
 }
