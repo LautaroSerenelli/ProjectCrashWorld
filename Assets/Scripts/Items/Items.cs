@@ -6,20 +6,21 @@ public class Items : MonoBehaviour
 {
     public string itemName = "Item";
     public int value = 1;
-
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            CollectItem();
+            PlayerStats playerStats = other.GetComponent<PlayerStats>();
+
+            CollectItem(playerStats);
         }
     }
 
-    private void CollectItem()
+    private void CollectItem(PlayerStats playerStats)
     {
-        Debug.Log($"Recolectaste: {itemName}, Valor: {value}");
+        playerStats.AddItem(value);
 
         gameObject.SetActive(false);
     }
-
 }

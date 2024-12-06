@@ -32,6 +32,17 @@ public class Slime : MonoBehaviour
 
     private void Update()
     {
+        PlayerStats playerStats = player.GetComponent<PlayerStats>();
+
+        if (playerStats != null && playerStats.isDead)
+        {
+            currentState = EnemyState.Pacifist;
+            animator.SetBool("IdleNormal", true);
+            animator.SetBool("IdleBattle", false);
+            return;
+        }
+
+
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
         if (attackTimer > 0)
