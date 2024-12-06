@@ -62,7 +62,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1931298151966786, guid: 928a1377c1cd4515b208fef3a396b8ea, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3270073174703392880}
+      addedObject: {fileID: 7055147850216649019}
     - targetCorrespondingSourceObject: {fileID: 1931298151966786, guid: 928a1377c1cd4515b208fef3a396b8ea, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2162399120507136921}
@@ -78,7 +78,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1931298151966786, guid: 928a1377c1cd4515b208fef3a396b8ea, type: 3}
   m_PrefabInstance: {fileID: 909802947625008271}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3270073174703392880
+--- !u!114 &7055147850216649019
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -87,20 +87,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 911583600729068749}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac14490bdfe93aa429c9413d209e8011, type: 3}
+  m_Script: {fileID: 11500000, guid: 5e059cf3ea3f3994184a585b046916b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
+  player: {fileID: 0}
   animator: {fileID: 1005260302980298961}
   moveSpeed: 3.5
   detectionRange: 30
-  attackRangeClose: 3
+  attackRangeClose: 4.5
   attackRangeLong: 6
   runSpeedMultiplier: 1.5
   cautionTime: 3
   damage: 1
-  attackCooldown: 3
-  heightRange: 1
+  attackCooldown: 2
 --- !u!114 &2162399120507136921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,12 +129,12 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5920644, y: 1.7130194, z: 1.4953262}
-  m_Center: {x: 0, y: 0.3565097, z: 0}
+  m_Size: {x: 1.3704213, y: 1.4521029, z: 1.2520123}
+  m_Center: {x: 0, y: 0.22605145, z: 0}
 --- !u!54 &1119943479415456140
 Rigidbody:
   m_ObjectHideFlags: 0

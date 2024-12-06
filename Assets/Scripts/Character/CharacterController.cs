@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
@@ -235,9 +236,20 @@ public class PlayerController : MonoBehaviour
         float yOffset = characterController.height / 2f;
         centerPosition = transform.position + transform.up * yOffset;
 
-        PerformAreaAttack(centerPosition, attackRadius, attackDamage);
+        StartCoroutine(SpinAttackRoutine());
 
         StartCoroutine(ResetSpinState());
+    }
+
+    IEnumerator SpinAttackRoutine()
+    {
+        while (isSpinning)
+        {
+            centerPosition = transform.position + transform.up * (characterController.height / 2f);
+            PerformAreaAttack(centerPosition, attackRadius, attackDamage);
+            yield return null;
+        }
+
     }
 
     IEnumerator ResetSpinState()
@@ -260,8 +272,18 @@ public class PlayerController : MonoBehaviour
         isSliding = true;
         canSlide = false;
         animator.SetTrigger("slide");
-        PerformAreaAttack(centerPosition, attackRadius, attackDamage);
+        StartCoroutine(SlideAttackRoutine());
         StartCoroutine(ResetSlideState());
+    }
+
+    IEnumerator SlideAttackRoutine()
+    {
+        while (isSliding)
+        {
+            centerPosition = transform.position + transform.up * (characterController.height / 2f);
+            PerformAreaAttack(centerPosition, attackRadius, attackDamage);
+            yield return null;
+        }
     }
 
     IEnumerator ResetSlideState()
@@ -279,7 +301,18 @@ public class PlayerController : MonoBehaviour
         animator.SetTrigger("bodySlam");
         verticalSpeed = jumpForce;
         currentMoveSpeed = 0f;
+        StartCoroutine(BodySlamAttackRoutine());
         StartCoroutine(ResetBodySlamState());
+    }
+
+    IEnumerator BodySlamAttackRoutine()
+    {
+        while (isBodySlam)
+        {
+            centerPosition = transform.position + transform.up * (characterController.height / 2f);
+            PerformAreaAttack(centerPosition, attackRadius * 1.5f, attackDamage * 2);
+            yield return null;
+        }
     }
 
     IEnumerator ResetBodySlamState()
@@ -344,6 +377,12 @@ public class PlayerController : MonoBehaviour
                 enemy.TakeDamage(damage);
             }
         }
+    }
+
+    public void OnDrawGizmos()
+    {
+        Gizmos.color = new Color (0f, 0f, 1f, 0.5f);
+        Gizmos.DrawSphere(centerPosition, attackRadius);
     }
 
     void FixedUpdate()
