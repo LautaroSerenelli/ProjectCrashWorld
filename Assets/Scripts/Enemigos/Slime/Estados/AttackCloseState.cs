@@ -101,7 +101,6 @@ public class AttackCloseState : IEnemyState
         
         isAttacking = true;
         slime.animator.SetBool("IdleBattle", false);
-        Debug.Log(isLongRangeAttack);
         slime.animator.SetTrigger(isLongRangeAttack ? "Attack02" : "Attack01");
     }
 

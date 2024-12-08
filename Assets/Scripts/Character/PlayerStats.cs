@@ -27,10 +27,14 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private Transform respawnPoint;
     public GameObject damageParticlesPrefab;
 
+    private PlayerController playerController;
+
     private void Start()
     {
         currentHealth = initialHealth;
         currentLives = initialLives;
+
+        playerController = GetComponent<PlayerController>();
     }
 
     public void AddItem(int amount)
@@ -97,7 +101,6 @@ public class PlayerStats : MonoBehaviour
     private IEnumerator InvulnerableCoroutine()
     {
         yield return new WaitForSeconds(respawnDelay);
-
         if (currentHealth <= 0)
         {
             Die();
@@ -108,9 +111,18 @@ public class PlayerStats : MonoBehaviour
 
     private void Respawn()
     {
+        playerController.ResetMovement();
+        playerController.GetComponent<CharacterController>().enabled = false;
         transform.position = respawnPoint.position;
         currentHealth = initialHealth;
         isDead = false;
+        StartCoroutine(ReactivateCharacterController());
+    }
+
+    private IEnumerator ReactivateCharacterController()
+    {
+        yield return new WaitForSeconds(0.1f);
+        playerController.GetComponent<CharacterController>().enabled = true;
     }
 
     private void GameOver()

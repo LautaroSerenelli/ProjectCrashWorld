@@ -6,6 +6,7 @@ public class EnemyPool : MonoBehaviour
 {
     public GameObject enemyPrefab;
     public GameObject spawnEffectPrefab;
+    public GameObject enemyDieParticlesPrefab;
     public int poolSize = 10;
     private List<GameObject> enemyPool;
 
@@ -36,11 +37,14 @@ public class EnemyPool : MonoBehaviour
                 return enemy;
             }
         }
-        return null; // Si no hay enemigos disponibles en el pool
+        return null;
     }
 
     public void ReturnEnemyToPool(GameObject enemy)
     {
+        GameObject particles = Instantiate(enemyDieParticlesPrefab, enemy.transform.position, Quaternion.identity);
+        Destroy(particles, 2f);
+
         enemy.SetActive(false);
     }
 

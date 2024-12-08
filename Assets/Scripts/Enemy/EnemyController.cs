@@ -28,6 +28,6 @@ public class EnemyController : MonoBehaviour
 
     void Die()
     {
-        enemyPool.ReturnEnemyToPool(gameObject); // Devuelve este enemigo al pool
+        enemyPool.ReturnEnemyToPool(gameObject);
     }
 }

@@ -94,6 +94,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Fruit
   value: 1
+  collectParticlesPrefab: {fileID: 8255215019295333937, guid: 139c09de669d89546999f577551dd885, type: 3}
 --- !u!65 &-2859627273124925178
 BoxCollider:
   m_ObjectHideFlags: 0

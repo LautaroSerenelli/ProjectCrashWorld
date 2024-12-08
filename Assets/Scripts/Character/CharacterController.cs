@@ -376,6 +376,12 @@ public class PlayerController : MonoBehaviour
             {
                 enemy.TakeDamage(damage);
             }
+
+            if (collider.CompareTag("Crates"))
+            {
+                Crates crate = collider.GetComponent<Crates>();
+                crate.Break();
+            }
         }
     }
 
@@ -411,5 +417,11 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(ResetImpactState());
             hasLanded = false;
         }
+    }
+
+    public void ResetMovement()
+    {
+        verticalSpeed = 0f;
+        moveDirection = Vector3.zero;
     }
 }
