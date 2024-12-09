@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
+using System.Linq;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
@@ -33,7 +34,7 @@ public class PlayerController : MonoBehaviour
     public int attackDamage = 1;
 
     // Slide
-    private bool isSliding = false;
+    public bool isSliding = false;
     public float slideSpeed = 20f;
     private float slideDuration = 0.5f;
     private bool canSlide = true;
@@ -44,14 +45,15 @@ public class PlayerController : MonoBehaviour
     private bool canBodySlam = true;
     private bool hasLanded = false;
     private bool isImpacted = false;
+    private bool isDamageCrates = false;
 
-    private CharacterController characterController;
+    public CharacterController characterController;
     private Transform mainCameraTransform;
     private Vector3 moveDirection;
 
     private bool isIdle;
     private bool isGrounded;
-    private bool isJumping;
+    public bool isJumping;
     private bool isSpinning = false;
     private bool isMoving;
 
@@ -144,6 +146,7 @@ public class PlayerController : MonoBehaviour
         if (isGrounded && !isImpacted)
         {
             isJumping = false;
+            verticalSpeed = -2f;
 
             if (Input.GetButtonDown("Jump"))
             {
@@ -301,12 +304,19 @@ public class PlayerController : MonoBehaviour
         animator.SetTrigger("bodySlam");
         verticalSpeed = jumpForce;
         currentMoveSpeed = 0f;
-        StartCoroutine(BodySlamAttackRoutine());
+
+        isDamageCrates = true;
+        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Crates"), true);
+        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Fruits"), true);
+
         StartCoroutine(ResetBodySlamState());
+        StartCoroutine(BodySlamAttackRoutine());
     }
 
     IEnumerator BodySlamAttackRoutine()
     {
+        yield return new WaitForSeconds(0.5f);
+        StartCoroutine(AttackContinues());
         while (isBodySlam)
         {
             centerPosition = transform.position + transform.up * (characterController.height / 2f);
@@ -324,10 +334,32 @@ public class PlayerController : MonoBehaviour
     IEnumerator ResetImpactState()
     {
         yield return new WaitForSeconds(0.7f);
-        animator.SetTrigger("bodySlamEnd");
-        isBodySlam = false;
-        canBodySlam = true;
-        isImpacted = false;
+        if (isGrounded)
+        {
+            animator.SetTrigger("bodySlamEnd");
+            isBodySlam = false;
+            canBodySlam = true;
+            isImpacted = false;
+
+            isDamageCrates = false;
+            Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Crates"), false);
+            Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Fruits"), false);
+        }
+        else
+        {
+            StartCoroutine(ResetImpactState());
+        }
+    }
+
+    IEnumerator AttackContinues()
+    {
+        yield return new WaitForSeconds(0.01f);
+        while (isDamageCrates)
+        {
+            PerformAreaAttack(centerPosition, attackRadius * 1.5f, attackDamage * 2);
+            centerPosition = transform.position + transform.up * (characterController.height / 2f);
+            yield return new WaitForSeconds(0.01f);
+        }
     }
 
     // Idle
@@ -382,13 +414,22 @@ public class PlayerController : MonoBehaviour
                 Crates crate = collider.GetComponent<Crates>();
                 crate.Break();
             }
+
+            if (collider.CompareTag("ParedDestruible"))
+            {
+                DestructibleWall pared = collider.GetComponent<DestructibleWall>();
+                if (pared != null)
+                {
+                    pared.RomperPared();
+                }
+            }
         }
     }
 
     public void OnDrawGizmos()
     {
         Gizmos.color = new Color (0f, 0f, 1f, 0.5f);
-        Gizmos.DrawSphere(centerPosition, attackRadius);
+        Gizmos.DrawSphere(centerPosition, attackRadius *1.5f);
     }
 
     void FixedUpdate()
@@ -413,7 +454,7 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetTrigger("bodySlamImpact");
             isImpacted = true;
-            PerformAreaAttack(centerPosition, attackRadius, attackDamage * 2);
+            PerformAreaAttack(centerPosition, attackRadius * 1.5f, attackDamage * 2);
             StartCoroutine(ResetImpactState());
             hasLanded = false;
         }

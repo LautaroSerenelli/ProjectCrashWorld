@@ -8,7 +8,7 @@ public class PlayerStats : MonoBehaviour
     [Header("Health Settings")]
     public int initialHealth = 1;
     public int maxHealth = 3;
-    private int currentHealth;
+    public int currentHealth;
 
     [Header("Lives Settings")]
     public int initialLives = 3;
@@ -21,20 +21,40 @@ public class PlayerStats : MonoBehaviour
 
     [Header("Fruits Settings")]
     public int currentFruits = 0;
-    public int fruitsForLive = 10;
+    public int fruitsForLive = 20;
 
     [Header("Referencias")]
-    [SerializeField] private Transform respawnPoint;
+    [SerializeField] public Transform respawnPoint;
     public GameObject damageParticlesPrefab;
 
     private PlayerController playerController;
 
-    private void Start()
+    public void Start()
     {
         currentHealth = initialHealth;
         currentLives = initialLives;
 
         playerController = GetComponent<PlayerController>();
+
+        if (SceneManager.GetActiveScene().name == "Nivel1") 
+        {
+            GameManager.Instance.LoadPlayerData(this);
+        }
+        FindRespawnPoint();
+    }
+        
+    public void FindRespawnPoint()
+    {
+        GameObject respawnObject = GameObject.FindGameObjectWithTag("RespawnPoint");
+        
+        if (respawnObject != null)
+        {
+            respawnPoint = respawnObject.transform;
+        }
+        else
+        {
+            Debug.LogWarning("No se encontró un punto de respawn en la escena.");
+        }
     }
 
     public void AddItem(int amount)
@@ -113,10 +133,25 @@ public class PlayerStats : MonoBehaviour
     {
         playerController.ResetMovement();
         playerController.GetComponent<CharacterController>().enabled = false;
-        transform.position = respawnPoint.position;
+        
+        if (respawnPoint != null)
+        {
+            Vector3 respawnPosition = respawnPoint.GetComponent<Checkpoint>().GetColliderCenter();
+            transform.position = respawnPosition;
+        }
+
         currentHealth = initialHealth;
         isDead = false;
         StartCoroutine(ReactivateCharacterController());
+
+        if (respawnPoint != null)
+        {
+            Checkpoint checkpoint = respawnPoint.GetComponent<Checkpoint>();
+            if (checkpoint != null)
+            {
+                checkpoint.PlayRespawnParticles(transform.position);
+            }
+        }
     }
 
     private IEnumerator ReactivateCharacterController()
@@ -125,8 +160,13 @@ public class PlayerStats : MonoBehaviour
         playerController.GetComponent<CharacterController>().enabled = true;
     }
 
+    public void OnDestroy()
+    {
+        GameManager.Instance.SavePlayerData(currentHealth, currentLives, currentFruits);
+    }
+
     private void GameOver()
     {
-        SceneManager.LoadScene("GameOver");
+        SceneManager.LoadScene("MenuScene");
     }
 }

@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Enemy
   - Crates
+  - SueloDesmoronableReaparecer
+  - Fruits
+  - ParedDestruible
+  - RespawnPoint
   layers:
   - Default
   - TransparentFX
@@ -14,9 +18,9 @@ TagManager:
   - Water
   - UI
   - PostProcessing
-  - 
-  - 
-  - 
+  - Player
+  - Crates
+  - Fruits
   - 
   - 
   - 

@@ -7,6 +7,7 @@ public class MenuInicial : MonoBehaviour
 {
     public void Jugar()
     {
+        GameManager.Instance.ResetPlayerData();
         SceneManager.LoadScene(1);
     }
 

@@ -24,7 +24,7 @@ public class ThirdPersonCamera : MonoBehaviour
     void LateUpdate()
     {
         // Obtener el movimiento del ratón
-        mouseX += Input.GetAxis("Mouse X") * sensitivity;
+        mouseX += Input.GetAxis("Mouse X") * -sensitivity;
         mouseY -= Input.GetAxis("Mouse Y") * sensitivity;
 
         // Limitar el movimiento vertical del ratón

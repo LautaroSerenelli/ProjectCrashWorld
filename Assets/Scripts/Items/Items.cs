@@ -8,7 +8,7 @@ public class Items : MonoBehaviour
     public int value = 1;
     public GameObject collectParticlesPrefab;
     
-    private void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
