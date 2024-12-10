@@ -5,7 +5,6 @@ using UnityEngine;
 public class Checkpoint : MonoBehaviour
 {
     [Header("Checkpoint Settings")]
-    [SerializeField] private Transform respawnPoint;
     [SerializeField] private ParticleSystem checkpointParticles;
     [SerializeField] private ParticleSystem respawnUpdateParticles;
     [SerializeField] private GameObject checkpointEffectPrefab;
@@ -41,15 +40,13 @@ public class Checkpoint : MonoBehaviour
         }
     }
 
-    public void PlayRespawnParticles(Vector3 respawnPosition)
+    public void PlayRespawnParticles()
     {
         if (respawnUpdateParticles != null)
         {
             Vector3 spawnPosition = GetColliderCenter();
             ParticleSystem respawnParticlesInstance = Instantiate(respawnUpdateParticles, spawnPosition, Quaternion.identity);
 
-            var main = respawnParticlesInstance.main;
-            main.duration = 1f;
             respawnParticlesInstance.Play();
             Destroy(respawnParticlesInstance.gameObject, 1f);
         }

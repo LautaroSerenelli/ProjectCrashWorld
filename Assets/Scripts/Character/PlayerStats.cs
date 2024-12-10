@@ -26,7 +26,8 @@ public class PlayerStats : MonoBehaviour
     [Header("Referencias")]
     [SerializeField] public Transform respawnPoint;
     public GameObject damageParticlesPrefab;
-
+    
+    private Animator animator;
     private PlayerController playerController;
 
     public void Start()
@@ -35,6 +36,7 @@ public class PlayerStats : MonoBehaviour
         currentLives = initialLives;
 
         playerController = GetComponent<PlayerController>();
+        animator = GetComponent<Animator>();
 
         if (SceneManager.GetActiveScene().name == "Nivel1") 
         {
@@ -49,7 +51,7 @@ public class PlayerStats : MonoBehaviour
         
         if (respawnObject != null)
         {
-            respawnPoint = respawnObject.transform;
+            respawnObject.transform.position = respawnPoint.position;
         }
         else
         {
@@ -132,32 +134,24 @@ public class PlayerStats : MonoBehaviour
     private void Respawn()
     {
         playerController.ResetMovement();
-        playerController.GetComponent<CharacterController>().enabled = false;
-        
-        if (respawnPoint != null)
-        {
-            Vector3 respawnPosition = respawnPoint.GetComponent<Checkpoint>().GetColliderCenter();
-            transform.position = respawnPosition;
-        }
-
-        currentHealth = initialHealth;
-        isDead = false;
-        StartCoroutine(ReactivateCharacterController());
 
         if (respawnPoint != null)
         {
             Checkpoint checkpoint = respawnPoint.GetComponent<Checkpoint>();
             if (checkpoint != null)
             {
-                checkpoint.PlayRespawnParticles(transform.position);
+                Vector3 respawnPosition = checkpoint.GetColliderCenter();
+                transform.position = respawnPosition;
+                checkpoint.PlayRespawnParticles();
             }
         }
-    }
 
-    private IEnumerator ReactivateCharacterController()
-    {
-        yield return new WaitForSeconds(0.1f);
-        playerController.GetComponent<CharacterController>().enabled = true;
+        playerController.TeleportToCheckpoint();
+
+        ResetAnimatorParameters();
+
+        currentHealth = initialHealth;
+        isDead = false;
     }
 
     public void OnDestroy()
@@ -168,5 +162,19 @@ public class PlayerStats : MonoBehaviour
     private void GameOver()
     {
         SceneManager.LoadScene("MenuScene");
+    }
+
+    public void ResetAnimatorParameters()
+    {
+        animator.SetBool("isIdle", true);
+        animator.SetBool("isWalking", false);
+        animator.SetBool("isRunning", false);
+        animator.SetBool("isIdleTrigger", false);
+        animator.ResetTrigger("jump");
+        animator.ResetTrigger("spinAttack");
+        animator.ResetTrigger("slide");
+        animator.ResetTrigger("bodySlam");
+        animator.ResetTrigger("bodySlamImpact");
+        animator.ResetTrigger("idleShort01");
     }
 }

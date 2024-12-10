@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour
     private bool isDamageCrates = false;
 
     public CharacterController characterController;
+    private PlayerStats playerStats;
     private Transform mainCameraTransform;
     private Vector3 moveDirection;
 
@@ -70,6 +71,7 @@ public class PlayerController : MonoBehaviour
         mainCameraTransform = Camera.main.transform;
         characterController.center = new Vector3(characterController.center.x, characterController.height / 2f, characterController.center.z);
         animator = GetComponent<Animator>();
+        playerStats = GetComponent<PlayerStats>();
     }
 
     void Update()
@@ -337,6 +339,7 @@ public class PlayerController : MonoBehaviour
         if (isGrounded)
         {
             animator.SetTrigger("bodySlamEnd");
+            animator.ResetTrigger("bodySlamImpact");
             isBodySlam = false;
             canBodySlam = true;
             isImpacted = false;
@@ -432,7 +435,7 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawSphere(centerPosition, attackRadius *1.5f);
     }
 
-    void FixedUpdate()
+    public void FixedUpdate()
     {
         if (isSliding)
         {
@@ -464,5 +467,21 @@ public class PlayerController : MonoBehaviour
     {
         verticalSpeed = 0f;
         moveDirection = Vector3.zero;
+    }
+
+    public void TeleportToCheckpoint()
+    {
+        if (playerStats.respawnPoint != null)
+        {
+            characterController.enabled = false;
+
+            ResetMovement();
+            playerStats.ResetAnimatorParameters();
+            
+            Vector3 checkpointCenter = playerStats.respawnPoint.GetComponent<Checkpoint>().GetColliderCenter();
+            transform.position = checkpointCenter;
+
+            characterController.enabled = true;
+        }
     }
 }

@@ -770,7 +770,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 4.867576, y: 0, z: 0}
+  m_ConnectedAnchor: {x: 4.688626, y: -0.2960097, z: -0.3923082}
   serializedVersion: 2
   m_UseSpring: 0
   m_Spring:
@@ -931,7 +931,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: 0.5, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 4.867576, y: 0.5550191, z: 0}
+  m_ConnectedAnchor: {x: 4.219089, y: 0.7960073, z: -0.63337207}
   serializedVersion: 2
   m_UseSpring: 0
   m_Spring:
@@ -5954,7 +5954,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -2.433788, y: 0, z: 0}
+  m_ConnectedAnchor: {x: -2.4337885, y: 0, z: 0}
   serializedVersion: 2
   m_UseSpring: 0
   m_Spring:
@@ -6451,7 +6451,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a5374e4a3a2201408d7ad05972b72bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  respawnPoint: {fileID: 465777765}
   checkpointParticles: {fileID: 3576924614362489594, guid: 4a919ff208278c347a4582e77e55ed83, type: 3}
   respawnUpdateParticles: {fileID: 483918908983999530, guid: 2111d2eee3769bf45925d85467473212, type: 3}
   checkpointEffectPrefab: {fileID: 6900704511881687559, guid: cf9be061d575df6418c98c2c5ebde13d, type: 3}
@@ -6485,7 +6484,7 @@ Transform:
   m_GameObject: {fileID: 493694155}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 94.53, y: 16.13, z: -715.44}
+  m_LocalPosition: {x: 94.53, y: 16.13, z: -717.98}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8538,7 +8537,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 2.433788, y: 0, z: 0}
+  m_ConnectedAnchor: {x: 12.940436, y: 49.334526, z: 93.52356}
   serializedVersion: 2
   m_UseSpring: 0
   m_Spring:
@@ -12256,7 +12255,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: 0.5, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 4.867576, y: 0.5550191, z: 0}
+  m_ConnectedAnchor: {x: 4.867576, y: 0.50000024, z: 0}
   serializedVersion: 2
   m_UseSpring: 0
   m_Spring:
@@ -13649,7 +13648,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 4.688626, y: -0.2960097, z: -0.3923082}
+  m_ConnectedAnchor: {x: 4.50795, y: -0.2960097, z: 0.963017}
   serializedVersion: 2
   m_UseSpring: 0
   m_Spring:
@@ -14413,7 +14412,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a5374e4a3a2201408d7ad05972b72bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  respawnPoint: {fileID: 0}
   checkpointParticles: {fileID: 3576924614362489594, guid: 4a919ff208278c347a4582e77e55ed83, type: 3}
   respawnUpdateParticles: {fileID: 483918908983999530, guid: 2111d2eee3769bf45925d85467473212, type: 3}
   checkpointEffectPrefab: {fileID: 6900704511881687559, guid: cf9be061d575df6418c98c2c5ebde13d, type: 3}
@@ -16280,7 +16278,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 2.433788, y: 0, z: 0}
+  m_ConnectedAnchor: {x: 2.4337885, y: 0, z: 0}
   serializedVersion: 2
   m_UseSpring: 0
   m_Spring:
@@ -19501,7 +19499,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 2.433788, y: 0, z: 0}
+  m_ConnectedAnchor: {x: -0.66344786, y: 49.334526, z: 84.13655}
   serializedVersion: 2
   m_UseSpring: 0
   m_Spring:
@@ -19767,7 +19765,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: 0.5, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 4.867576, y: 0.5550191, z: 0}
+  m_ConnectedAnchor: {x: 5.0437703, y: 0.7960073, z: -0.38742593}
   serializedVersion: 2
   m_UseSpring: 0
   m_Spring:
@@ -21180,7 +21178,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a5374e4a3a2201408d7ad05972b72bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  respawnPoint: {fileID: 0}
   checkpointParticles: {fileID: 3576924614362489594, guid: 4a919ff208278c347a4582e77e55ed83, type: 3}
   respawnUpdateParticles: {fileID: 483918908983999530, guid: 2111d2eee3769bf45925d85467473212, type: 3}
   checkpointEffectPrefab: {fileID: 6900704511881687559, guid: cf9be061d575df6418c98c2c5ebde13d, type: 3}
@@ -24873,7 +24870,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

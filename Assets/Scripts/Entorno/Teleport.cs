@@ -18,6 +18,11 @@ public class Teleport : MonoBehaviour
                     playerController.characterController.enabled = false;
                 }
                 other.transform.position = TriggerDestino.position;
+                foreach (Transform child in other.transform)
+                {
+                    child.position = TriggerDestino.position;
+                }
+
                 if (playerController != null)
                 {
                     playerController.characterController.enabled = true;
