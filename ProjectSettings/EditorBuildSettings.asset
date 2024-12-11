@@ -12,11 +12,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Crash World.unity
     guid: 09807b2a772f1534aaa42765f8d377af
   - enabled: 1
-    path: Assets/Scenes/GameOver.unity
-    guid: 73807a143815e774b9d9f77631a65b36
-  - enabled: 1
     path: Assets/Scenes/Nivel1.unity
-    guid: 481683c320f98b446bc2077f4de2aa97
+    guid: dd5e10dab58c43647a38475580fdfce4
   - enabled: 1
     path: Assets/Scenes/JuegoTerminado.unity
     guid: 128c6ceae3e01eb45b153cd9036cbe0e
